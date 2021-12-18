@@ -5,8 +5,10 @@ const express = require('express');
 const app = express();
 
 app.use(express.static(path.join(__dirname, 'views')));
-app.use(express.json());
+//          data channel
+//  JSON -> ============ -> body = { }
 app.use(express.urlencoded());
+app.use(express.json());
 
 // Endpoint -> render home page
 app.get('/', (req, res) => {
@@ -29,18 +31,18 @@ app.post('/login', (req, res) => {
 
   // { email, password }
   const { email: correo, password: clave } = req.body;
-	console.log(correo, clave);
+  console.log(correo, clave);
 
   // Compare the email with john@test.com and if password is pass1234
-	// If success, send 200 status to client
-	if (correo === 'john@test.com' && clave === 'pass1234') {
-		console.log('access granted');
-		return res.status(200).json({
-			status: 'success', 
-			data: {message: 'access granted'}
-		});
-		// return res.end();
-	}
+  // If success, send 200 status to client
+  if (correo === 'john@test.com' && clave === 'pass1234') {
+    console.log('access granted');
+    return res.status(200).json({
+      status: 'success',
+      data: { message: 'access granted' },
+    });
+    // return res.end();
+  }
   // If the credentials are wrong, send 500 status to client
   res.status(500).json({
     status: 'failed',
